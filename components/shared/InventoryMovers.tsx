@@ -35,7 +35,7 @@ const InventoryMovers: React.FC<InventoryMoversProps> = ({ salesHistory }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <h3 className="font-bold text-slate-800 flex items-center mb-3">
-                    <FireIcon className="w-5 h-5 mr-2 text-orange-500"/>
+                    <FireIcon className="w-5 h-5 mr-2 text-teal-600"/>
                     많이 팔리는 제품
                 </h3>
                 <div className="space-y-3">
@@ -45,8 +45,8 @@ const InventoryMovers: React.FC<InventoryMoversProps> = ({ salesHistory }) => {
                                 <p className="font-medium text-slate-700 truncate" title={item.name}>{item.name}</p>
                                 <p className="font-semibold text-slate-600">{item.count}</p>
                             </div>
-                            <div className="w-full bg-orange-100 rounded-full h-1.5">
-                                <div className="bg-orange-400 h-1.5 rounded-full" style={{ width: `${(item.count / maxFastMoverCount) * 100}%` }}></div>
+                            <div className="w-full bg-teal-100 rounded-full h-1.5">
+                                <div className="bg-teal-400 h-1.5 rounded-full" style={{ width: `${(item.count / maxFastMoverCount) * 100}%` }}></div>
                             </div>
                         </div>
                     ))}
@@ -54,7 +54,7 @@ const InventoryMovers: React.FC<InventoryMoversProps> = ({ salesHistory }) => {
             </div>
              <div>
                 <h3 className="font-bold text-slate-800 flex items-center mb-3">
-                    <CubeTransparentIcon className="w-5 h-5 mr-2 text-sky-500"/>
+                    <CubeTransparentIcon className="w-5 h-5 mr-2 text-slate-500"/>
                     적게 팔리는 제품
                 </h3>
                 <div className="space-y-3">
@@ -64,8 +64,8 @@ const InventoryMovers: React.FC<InventoryMoversProps> = ({ salesHistory }) => {
                                 <p className="font-medium text-slate-700 truncate" title={item.name}>{item.name}</p>
                                 <p className="font-semibold text-slate-600">{item.count}</p>
                             </div>
-                           <div className="w-full bg-sky-100 rounded-full h-1.5">
-                                <div className="bg-sky-400 h-1.5 rounded-full" style={{ width: `${(item.count / maxFastMoverCount) * 100}%` }}></div>
+                           <div className="w-full bg-slate-200 rounded-full h-1.5">
+                                <div className="bg-slate-400 h-1.5 rounded-full" style={{ width: `${(item.count / maxFastMoverCount) * 100}%` }}></div>
                             </div>
                         </div>
                     ))}

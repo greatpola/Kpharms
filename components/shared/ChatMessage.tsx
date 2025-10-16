@@ -17,7 +17,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ sender, children }) => {
                 </div>
             )}
 
-            <div className={`max-w-2xl w-full ${isAI ? 'text-gray-800' : ''}`}>
+            <div className={`max-w-2xl w-full ${isAI ? 'text-slate-800' : ''}`}>
                 {children}
             </div>
         </div>

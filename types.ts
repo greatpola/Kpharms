@@ -1,16 +1,38 @@
-import type React from 'react';
+import type { SVGProps } from 'react';
 
-// From App.tsx
+// General
 export type TabId = 'dashboard' | 'hiring' | 'product' | 'labor' | 'content' | 'medication' | 'customer';
 
-// From constants.ts
 export interface Tab {
   id: TabId;
   label: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon: React.FC<SVGProps<SVGSVGElement>>;
 }
 
-// From components/HiringAssistant.tsx
+// Gemini Chat
+export interface ChatMessage {
+  id: number;
+  role: 'user' | 'model';
+  parts: { text: string }[];
+}
+
+// Reports
+export type ReportType = 'hiring' | 'product' | 'labor' | 'content' | 'medication';
+
+export interface SavedReport {
+  id: string;
+  type: ReportType;
+  createdAt: string;
+  title: string;
+  content: string;
+  formData?: any;
+  subType?: 'card-news' | 'blog' | 'video';
+  imageUrl?: string | null;
+  sources?: any[];
+}
+
+
+// Form Data
 export interface HiringFormData {
   pharmacyName: string;
   location: string;
@@ -23,7 +45,6 @@ export interface HiringFormData {
   expectedRole: string;
 }
 
-// From components/ProductRecommender.tsx
 export interface ProductFormData {
   pharmacyName: string;
   location: string;
@@ -32,7 +53,6 @@ export interface ProductFormData {
   currentProducts: string;
 }
 
-// From components/LaborAnalyzer.tsx
 export interface LaborFormData {
   pharmacists: string;
   staff: string;
@@ -41,23 +61,6 @@ export interface LaborFormData {
   peakTimes: string;
 }
 
-export interface LaborAnalysisData {
-    comparison: {
-        pharmacists: { user: number; average: number };
-        staff: { user: number; average: number };
-        totalWages: { user: number; average: number };
-        wagesPerPharmacist: { user: number; average: number };
-    };
-    analysisSummary: string;
-    suggestions: {
-        title: string;
-        description: string;
-        expectedEffect: string;
-    }[];
-}
-
-
-// From components/ContentCreator.tsx
 export interface CardNewsFormData {
   topic: string;
   targetAudience: string;
@@ -75,58 +78,49 @@ export interface VideoFormData {
   prompt: string;
 }
 
-// from contexts/ChatContext.tsx
-export interface ChatMessagePart {
-  text: string;
-}
-
-export interface ChatMessage {
-  id: number;
-  role: 'user' | 'model';
-  parts: ChatMessagePart[];
-}
-
-// from hooks/useReports.ts
-export type ReportType = 'hiring' | 'product' | 'labor' | 'content' | 'medication' | 'customer';
-
-export interface SavedReport {
-    id: string;
-    createdAt: string;
-    type: ReportType;
+// Labor Analyzer
+export interface LaborAnalysisData {
+  comparison: {
+    pharmacists: { user: number; average: number };
+    staff: { user: number; average: number };
+    totalWages: { user: number; average: number };
+    wagesPerPharmacist: { user: number; average: number };
+  };
+  analysisSummary: string;
+  suggestions: {
     title: string;
-    content: string;
-    formData: any;
-    subType?: string; // for content creator
-    sources?: any[]; // for grounding
+    description: string;
+    expectedEffect: string;
+  }[];
 }
 
-// From components/MedicationAssistant.tsx
+// Medication Assistant
 export interface PatientInfo {
-    age: string;
-    condition: string;
-    otherMeds: string;
-    precautions: string;
+  age: string;
+  condition: string;
+  otherMeds: string;
+  precautions: string;
 }
 
 export interface MedicationInfo {
-    name: string;
-    dosage: string;
-    frequency: string;
-    duration: string;
+  name: string;
+  dosage: string;
+  frequency: string;
+  duration: string;
 }
 
 export interface MedicationGuidance {
-    greeting: string;
-    medications: {
-        name: string;
-        instructions: string;
-        precautions: string;
-    }[];
-    generalAdvice: string[];
-    closing: string;
+  greeting: string;
+  medications: {
+    name: string;
+    instructions: string;
+    precautions: string;
+  }[];
+  generalAdvice: string[];
+  closing: string;
 }
 
-// From contexts/PharmacyDataContext.tsx and its consumers
+// Pharmacy Data
 export interface InventoryItem {
     id: string;
     name: string;
@@ -135,20 +129,22 @@ export interface InventoryItem {
     expirationDate: string;
 }
 
-export interface SalesHistoryItem {
-    id: string;
-    name: string;
-    category: string;
+export interface SalesHistoryItem extends InventoryItem {
     date: string;
-    quantity: number;
     price: number;
 }
 
 export interface Alert {
     id: string;
-    type: 'low_stock' | 'expiring_soon' | 'sales_opportunity';
+    type: 'low_stock' | 'expiring_soon';
     title: string;
     message: string;
+}
+
+export interface PurchaseRecord {
+    date: string;
+    item: string;
+    quantity: number;
 }
 
 export interface CommunicationRecord {
@@ -166,10 +162,13 @@ export interface Customer {
     notes: string;
     lastVisit: string;
     totalSpent: number;
-    purchaseHistory: {
-        date: string;
-        item: string;
-        quantity: number;
-    }[];
+    purchaseHistory: PurchaseRecord[];
     communicationHistory: CommunicationRecord[];
+}
+
+// Memos
+export interface Memo {
+    id: string;
+    content: string;
+    createdAt: string;
 }

@@ -32,7 +32,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ shareContent }) => {
   return (
     <button
       onClick={handleShare}
-      className="p-2 text-gray-500 hover:text-teal-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 rounded-full"
+      className="p-2 text-slate-500 hover:text-teal-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 rounded-full"
       title="공유하기"
     >
       {shared ? <CheckIcon className="w-5 h-5 text-teal-600" /> : <ShareIcon className="w-5 h-5" />}

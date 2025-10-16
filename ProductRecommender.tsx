@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useContext } from 'react';
-import { INITIAL_HIRING_FORM_DATA } from '../constants';
+import { INITIAL_PRODUCT_FORM_DATA } from '../constants';
 import { generateContent, generateContentWithGrounding } from '../services/geminiService';
-import type { HiringFormData, SavedReport } from '../types';
+import type { ProductFormData, SavedReport } from '../types';
 import { useReports } from '../hooks/useReports';
 import { ChatContext } from '../contexts/ChatContext';
 import LoadingSpinner from './shared/LoadingSpinner';
@@ -12,26 +12,22 @@ import { ClipboardDocumentListIcon } from './icons/ClipboardDocumentListIcon';
 import { SaveIcon } from './icons/SaveIcon';
 import { LinkIcon } from './icons/LinkIcon';
 
-const HIRING_FORM_LABELS: { [key in keyof HiringFormData]: string } = {
+const PRODUCT_FORM_LABELS: { [key in keyof ProductFormData]: string } = {
   pharmacyName: "약국명",
-  location: "위치",
-  mainDepartment: "주요 진료과",
-  prescriptionsPerDay: "일 평균 처방 건수",
-  workEnvironment: "근무 환경/분위기",
-  otherPerks: "기타 복지/특징",
-  targetPosition: "모집 직책",
-  requiredSkills: "필수/우대 기술",
-  expectedRole: "주요 담당 업무",
+  location: "위치 특성",
+  nearbyHospitals: "주변 병원",
+  mainCustomers: "주요 고객층",
+  currentProducts: "현재 주력 제품군",
 };
 
 // FIX: Define keys from the initial data object to prevent mismatches and fix type errors.
-const hiringFormKeys = Object.keys(INITIAL_HIRING_FORM_DATA) as (keyof HiringFormData)[];
+const productFormKeys = Object.keys(INITIAL_PRODUCT_FORM_DATA) as (keyof ProductFormData)[];
 
-const HiringAssistant: React.FC = () => {
-  const [formData, setFormData] = useState<HiringFormData>(INITIAL_HIRING_FORM_DATA);
+const ProductRecommender: React.FC = () => {
+  const [formData, setFormData] = useState<ProductFormData>(INITIAL_PRODUCT_FORM_DATA);
   const [isLoading, setIsLoading] = useState(false);
   const { chatHistory } = useContext(ChatContext);
-  const { reports, addReport, updateReport, deleteReport } = useReports('hiring');
+  const { reports, addReport, updateReport, deleteReport } = useReports('product');
   const [activeReport, setActiveReport] = useState<SavedReport | null>(null);
   const [editedContent, setEditedContent] = useState('');
   const [showSaveSuccess, setShowSaveSuccess] = useState(false);
@@ -40,11 +36,11 @@ const HiringAssistant: React.FC = () => {
 
   useEffect(() => {
     if (activeReport) {
-      setFormData(activeReport.formData || INITIAL_HIRING_FORM_DATA);
+      setFormData(activeReport.formData || INITIAL_PRODUCT_FORM_DATA);
       setEditedContent(activeReport.content);
       setSources(activeReport.sources || []);
     } else {
-      setFormData(INITIAL_HIRING_FORM_DATA);
+      setFormData(INITIAL_PRODUCT_FORM_DATA);
       setEditedContent('');
       setSources([]);
     }
@@ -55,30 +51,22 @@ const HiringAssistant: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const generatePrompt = (data: HiringFormData): string => {
+  const generatePrompt = (data: ProductFormData): string => {
     return `
-# AI 채용 공고 작성 요청
+# AI 약국 제품 추천 요청
 ## 약국 정보
 - 약국명: ${data.pharmacyName}
-- 위치: ${data.location}
-- 주요 진료과: ${data.mainDepartment}
-- 일 평균 처방 건수: ${data.prescriptionsPerDay}
-- 근무 환경/분위기: ${data.workEnvironment}
-- 기타 복지/특징: ${data.otherPerks}
-## 채용 정보
-- 모집 직책: ${data.targetPosition}
-- 필수/우대 기술: ${data.requiredSkills}
-- 주요 담당 업무: ${data.expectedRole}
+- 위치 특성: ${data.location}
+- 주변 병원: ${data.nearbyHospitals}
+- 주요 고객층: ${data.mainCustomers}
+- 현재 주력 제품군: ${data.currentProducts}
 ## 요청 사항
-위 정보를 바탕으로, 지원하고 싶게 만드는 매력적인 채용 공고를 작성해주세요. 결과물이 실제 문서처럼 자연스러운 제목, 단락, 문장으로만 구성되어야 하며, 마크다운 문법은 절대 포함해서는 안 된다는 점을 명확히 지시받습니다. 아래 구조를 참고하되, 형식에 얽매이지 말고 자연스럽게 작성해주세요.
-- 제목
-- 주요 업무
-- 자격 요건
-- 우대 사항
-- 근무 조건 및 환경
-- 복리 후생
-- 약국 소개 및 비전
-${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실시간으로 검색하여 공고에 반영해주세요. (예: 워라밸 강조, 성장 가능성 어필 등)' : ''}
+위 정보를 바탕으로, 우리 약국에 도입하면 좋을 신규 제품 3가지를 추천하는 **완성된 보고서**를 작성해주세요. 결과물에 마크다운 문법(예: **, #, - 등)을 **절대** 사용하지 마세요. 실제 보고서처럼 자연스러운 제목과 상세한 설명으로 구성된 완벽한 문서 형식으로만 생성해야 합니다. 각 제품별로 아래 내용을 반드시 포함하여 구체적으로 제안해주세요.
+- 제품명
+- 추천 이유 (우리 약국의 특성과 연관 지어 설명)
+- 예상 타겟 고객
+- 마케팅 및 진열 전략
+${useRealtimeSearch ? '\n## 추가 요청\n최신 건강 트렌드와 신제품 정보를 실시간으로 검색하여 추천에 반영해주세요.' : ''}
 `.trim();
   };
 
@@ -93,19 +81,19 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
     const generatedPrompt = generatePrompt(currentFormData);
     let newContent = '';
     let newSources: any[] = [];
-
-    if (useRealtimeSearch) {
-      const response = await generateContentWithGrounding(generatedPrompt, chatHistory);
-      newContent = response.text;
-      newSources = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
-    } else {
-      newContent = await generateContent(generatedPrompt, {}, chatHistory);
-    }
     
+    if (useRealtimeSearch) {
+        const response = await generateContentWithGrounding(generatedPrompt, chatHistory);
+        newContent = response.text;
+        newSources = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+    } else {
+        newContent = await generateContent(generatedPrompt, {}, chatHistory);
+    }
+
     setEditedContent(newContent);
     setSources(newSources);
 
-    const title = `${currentFormData.pharmacyName} - ${currentFormData.targetPosition} 채용`;
+    const title = `${currentFormData.pharmacyName} 맞춤 제품 추천`;
     const newReport = addReport({
         title,
         content: newContent,
@@ -115,7 +103,7 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
     setActiveReport(newReport);
     setIsLoading(false);
   };
-
+  
   const handleSave = () => {
     if (!activeReport) return;
     const updatedReport = {
@@ -147,8 +135,8 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
 
   return (
     <div className="p-4 sm:p-8">
-      <h2 className="text-3xl font-bold text-slate-800 mb-2">AI 채용 비서</h2>
-      <p className="text-slate-600 mb-6">약국 정보를 입력하면 AI가 매력적인 채용 공고를 자동으로 생성해드립니다.</p>
+      <h2 className="text-3xl font-bold text-slate-800 mb-2">AI 제품 추천</h2>
+      <p className="text-slate-600 mb-6">약국 환경과 고객 데이터를 기반으로 맞춤형 제품을 추천받으세요.</p>
       
       <div className="grid grid-cols-12 gap-8">
         <div className="col-span-12 lg:col-span-3">
@@ -159,7 +147,7 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
                 </div>
                 <div className="space-y-2 max-h-[600px] overflow-y-auto">
                     {sortedReports.map(report => (
-                         <div key={report.id} className="relative group">
+                        <div key={report.id} className="relative group">
                             <button onClick={() => setActiveReport(report)} className={`w-full text-left p-3 rounded-lg ${activeReport?.id === report.id ? 'bg-teal-50 text-teal-800' : 'hover:bg-slate-50'}`}>
                                 <p className="font-semibold text-sm truncate">{report.title}</p>
                                 <p className="text-xs text-slate-500">{new Date(report.createdAt).toLocaleString()}</p>
@@ -175,42 +163,42 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
 
         <div className="col-span-12 lg:col-span-9 grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
-                <h3 className="font-bold text-lg">{activeReport ? "보고서 정보 수정" : "새 채용 공고 생성"}</h3>
-                {hiringFormKeys.map((key) => (
-                    <div key={key}>
-                        <label className="block text-sm font-medium text-slate-700">{HIRING_FORM_LABELS[key]}</label>
-                        <textarea
-                            name={key}
-                            value={formData[key]}
-                            onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
-                            rows={key === 'workEnvironment' || key === 'otherPerks' ? 3 : 1}
-                        />
-                    </div>
-                ))}
-                <div className="flex items-center space-x-2 pt-2">
-                  <input
-                    type="checkbox"
-                    id="realtimeSearch"
-                    checked={useRealtimeSearch}
-                    onChange={(e) => setUseRealtimeSearch(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
-                    disabled={isGenerateDisabled}
+              <h3 className="font-bold text-lg">{activeReport ? "보고서 정보 수정" : "새 제품 추천 생성"}</h3>
+              {productFormKeys.map((key) => (
+                <div key={key}>
+                  <label className="block text-sm font-medium text-slate-700">{PRODUCT_FORM_LABELS[key]}</label>
+                  <textarea
+                    name={key}
+                    value={formData[key]}
+                    onChange={handleChange}
+                    className="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                    rows={2}
                   />
-                  <label htmlFor="realtimeSearch" className="text-sm text-slate-600">최신 채용 트렌드 실시간 검색</label>
                 </div>
-                <button type="submit" disabled={isLoading || isGenerateDisabled} className="w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 disabled:bg-slate-400">
-                    {isLoading ? '생성 중...' : 'AI 채용 공고 생성'}
-                </button>
+              ))}
+              <div className="flex items-center space-x-2 pt-2">
+                <input
+                  type="checkbox"
+                  id="realtimeSearch"
+                  checked={useRealtimeSearch}
+                  onChange={(e) => setUseRealtimeSearch(e.target.checked)}
+                  className="h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                  disabled={isGenerateDisabled}
+                />
+                <label htmlFor="realtimeSearch" className="text-sm text-slate-600">최신 건강 트렌드 실시간 검색</label>
+              </div>
+              <button type="submit" disabled={isLoading || isGenerateDisabled} className="w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 disabled:bg-slate-400">
+                {isLoading ? '추천받는 중...' : 'AI 제품 추천받기'}
+              </button>
             </form>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col h-full">
-                <h3 className="text-lg font-semibold text-slate-800 flex items-center p-4 border-b border-slate-200">AI 생성 채용 공고</h3>
+                <h3 className="text-lg font-semibold text-slate-800 flex items-center p-4 border-b border-slate-200">AI 추천 제품</h3>
                 <div className="flex-grow flex flex-col">
                     {isLoading && <div className="flex-grow flex items-center justify-center"><LoadingSpinner /></div>}
                     {!isLoading && !activeReport && (
                         <div className="flex-grow flex items-center justify-center text-slate-400">
-                            <p>새 공고를 생성하거나 저장된 보고서를 선택하세요.</p>
+                            <p>새 추천을 받거나 저장된 보고서를 선택하세요.</p>
                         </div>
                     )}
                     {activeReport && (
@@ -220,7 +208,7 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
                                 onChange={e => setEditedContent(e.target.value)} 
                                 className="w-full flex-grow p-6 bg-white border-0 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none resize-y leading-7 font-sans text-slate-800 min-h-[400px]"
                             />
-                             {sources.length > 0 && (
+                            {sources.length > 0 && (
                                 <div className="p-4 border-t border-slate-200">
                                     <h4 className="font-bold text-sm text-slate-700 flex items-center mb-2">
                                         <LinkIcon className="w-4 h-4 mr-2" />
@@ -236,7 +224,7 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
                                 </div>
                             )}
                             <div className="flex items-center justify-end space-x-4 p-4 border-t border-slate-200 bg-slate-50 rounded-b-xl">
-                                <ShareButton shareContent={{ title: activeReport?.title || '채용 공고', text: editedContent }} />
+                                <ShareButton shareContent={{ title: activeReport?.title || '제품 추천', text: editedContent }} />
                                 <div className="flex items-center">
                                     {showSaveSuccess && <span className="text-sm text-green-600 mr-2 transition-opacity duration-300">✓ 저장됨!</span>}
                                     <button onClick={handleSave} disabled={!activeReport} className="flex items-center justify-center px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg shadow-sm hover:bg-teal-700 disabled:bg-slate-400 disabled:opacity-50" title="수정사항 저장">
@@ -255,4 +243,4 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 채용 시장 트렌드를 실
   );
 };
 
-export default HiringAssistant;
+export default ProductRecommender;

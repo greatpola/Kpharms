@@ -45,7 +45,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ elementRef, fileName })
         onClick={handleDownload} 
         disabled={isDownloading}
         title="이미지로 다운로드"
-        className="p-2 text-gray-500 hover:text-teal-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 rounded-full disabled:opacity-50"
+        className="p-2 text-slate-500 hover:text-teal-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 rounded-full disabled:opacity-50"
     >
       {isDownloading ? <CheckIcon className="w-5 h-5 text-teal-600" /> : <DownloadIcon className="w-5 h-5" />}
     </button>

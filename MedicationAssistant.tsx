@@ -85,20 +85,20 @@ const MedicationAssistant: React.FC = () => {
   const responseSchema = {
     type: Type.OBJECT,
     properties: {
-      greeting: { type: Type.STRING, description: "마크다운 문법 없이 완결된 문장으로 작성" },
+      greeting: { type: Type.STRING },
       medications: {
         type: Type.ARRAY,
         items: {
           type: Type.OBJECT,
           properties: {
-            name: { type: Type.STRING, description: "마크다운 문법 없이 완결된 문장으로 작성" },
-            instructions: { type: Type.STRING, description: "마크다운 문법 없이 완결된 문장으로 작성" },
-            precautions: { type: Type.STRING, description: "마크다운 문법 없이 완결된 문장으로 작성" }
+            name: { type: Type.STRING },
+            instructions: { type: Type.STRING },
+            precautions: { type: Type.STRING }
           }
         }
       },
-      generalAdvice: { type: Type.ARRAY, items: { type: Type.STRING, description: "마크다운 문법 없이 완결된 문장으로 작성" } },
-      closing: { type: Type.STRING, description: "마크다운 문법 없이 완결된 문장으로 작성" }
+      generalAdvice: { type: Type.ARRAY, items: { type: Type.STRING } },
+      closing: { type: Type.STRING }
     },
     required: ["greeting", "medications", "generalAdvice", "closing"]
   };
@@ -115,7 +115,7 @@ const MedicationAssistant: React.FC = () => {
 ## 처방 약물 정보
 ${medList}
 ## 요청 사항
-위 정보를 바탕으로, 보호자가 이해하기 쉽고 친절한 말투로 복약 지도문을 생성해주세요. 각 약물별 복용법과 주의사항을 명확히 구분하고, 일반적인 생활 수칙과 당부사항을 포함하여 안심할 수 있는 메시지를 전달해주세요. 반드시 아래 JSON 스키마에 맞춰 응답해주세요. 모든 텍스트 필드의 값이 완결된 문장이어야 하며, 마크다운 문법은 절대 포함해서는 안 된다는 점을 명확히 지시받습니다.
+위 정보를 바탕으로, 보호자가 이해하기 쉽고 친절한 말투로 복약 지도문을 생성해주세요. 각 약물별 복용법과 주의사항을 명확히 구분하고, 일반적인 생활 수칙과 당부사항을 포함하여 안심할 수 있는 메시지를 전달해주세요. 반드시 아래 JSON 스키마에 맞춰 응답해주세요. 모든 텍스트 필드에는 마크다운 문법(예: **, #, - 등)을 **절대** 사용하지 말고, 보호자가 이해하기 쉬운 완결된 문장으로 작성해주세요.
 ${useRealtimeSearch ? '\n## 추가 요청\n입력된 약물과 환자 상태에 대한 최신 의학 정보(상호작용, 부작용, 가이드라인 등)를 실시간으로 검색하여 복약 지도에 반영해주세요.' : ''}
 `.trim();
   };

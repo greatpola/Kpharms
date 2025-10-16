@@ -134,7 +134,7 @@ const ContentCreator: React.FC = () => {
         setEditedContent(newContent);
         
         if (activeSubTab === 'card-news') {
-            const imagePrompt = `'${currentFormData.topic}' 주제를 상징하는 심플한 일러스트. 밝고 깨끗한 스타일. 배경에 글자나 텍스트가 전혀 없는 이미지를 생성해주세요.`;
+            const imagePrompt = `'${currentFormData.topic}'을(를) 주제로 한 카드뉴스에 어울리는, 밝고 심플한 스타일의 일러스트 이미지. 아이콘이나 상징적인 이미지가 좋음.`;
             imageUrl = await generateImageForContent(imagePrompt);
             setGeneratedImageUrl(imageUrl);
         }

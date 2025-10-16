@@ -75,8 +75,8 @@ const LaborAnalyzer: React.FC = () => {
     type: Type.OBJECT,
     properties: {
         comparison: { type: Type.OBJECT, properties: { pharmacists: { type: Type.OBJECT, properties: { user: { type: Type.NUMBER }, average: { type: Type.NUMBER } } }, staff: { type: Type.OBJECT, properties: { user: { type: Type.NUMBER }, average: { type: Type.NUMBER } } }, totalWages: { type: Type.OBJECT, properties: { user: { type: Type.NUMBER }, average: { type: Type.NUMBER } } }, wagesPerPharmacist: { type: Type.OBJECT, properties: { user: { type: Type.NUMBER }, average: { type: Type.NUMBER } } }, } },
-        analysisSummary: { type: Type.STRING, description: "마크다운 문법을 절대 사용하지 말고, 완결된 문장으로 서술하세요." },
-        suggestions: { type: Type.ARRAY, items: { type: Type.OBJECT, properties: { title: { type: Type.STRING }, description: { type: Type.STRING, description: "마크다운 문법을 절대 사용하지 말고, 완결된 문장으로 서술하세요." }, expectedEffect: { type: Type.STRING } } } }
+        analysisSummary: { type: Type.STRING, description: "마크다운 문법 없이, 평이한 텍스트로 요약해주세요." },
+        suggestions: { type: Type.ARRAY, items: { type: Type.OBJECT, properties: { title: { type: Type.STRING }, description: { type: Type.STRING, description: "마크다운 문법 없이, 평이한 텍스트로 설명해주세요." }, expectedEffect: { type: Type.STRING } } } }
     }
   };
 
@@ -90,7 +90,7 @@ const LaborAnalyzer: React.FC = () => {
 - 월 총 인건비: ${data.totalWages}
 - 주요 피크 타임: ${data.peakTimes}
 ## 요청 사항
-위 데이터를 바탕으로 전국 유사 규모 약국의 평균 데이터와 비교 분석해주세요. 인력 구조의 효율성, 인건비의 적정성을 평가하고, 개선을 위한 구체적인 제안 2-3가지를 제시해주세요. 모든 텍스트 필드의 값이 완결된 문장이어야 하며, 마크다운 문법은 절대 포함해서는 안 된다는 점을 명확히 지시받습니다.
+위 데이터를 바탕으로 전국 유사 규모 약국의 평균 데이터와 비교 분석해주세요. 인력 구조의 효율성, 인건비의 적정성을 평가하고, 개선을 위한 구체적인 제안 2-3가지를 제시해주세요. 모든 텍스트 필드(analysisSummary, description 등)에는 마크다운 문법을 절대 사용하지 말고, 완결된 문장으로 서술해주세요.
 ## 전국 평균 데이터 (가상)
 - 약사 수: 1.5명
 - 직원 수: 1명

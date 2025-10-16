@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         const fetchAIMessage = async () => {
             setIsLoadingMessage(true);
-            const prompt = "당신은 약국 AI 비서 '피코'입니다. 약사님에게 실제 동료가 말을 건네는 것처럼, 아주 자연스럽고 친근한 말투로 응원의 메시지나 간단한 팁을 한두 문장으로 생성해주세요. 딱딱한 정보 전달이 아닌, 감성적이고 따뜻한 느낌을 주는 것이 중요합니다. 절대 마크다운 문법(**, #, - 등)을 사용하지 말고, 평범한 대화체로만 작성해주세요.";
+            const prompt = "당신은 약국 AI 비서 '피코'입니다. 약사님을 위해 따뜻하고 힘이 되는 응원의 메시지나, 오늘 하루 약국 운영에 도움이 될 만한 간단한 팁을 생성해주세요. 실제 사람이 말을 건네는 것처럼 자연스럽고 친근한 말투를 사용하고, 마크다운 문법(**, #, - 등)은 절대 사용하지 마세요.";
             try {
                 const message = await generateContent(prompt);
                 setAiMessage(message);
@@ -87,13 +87,13 @@ const Dashboard: React.FC = () => {
                 <div className="lg:col-span-1 space-y-6">
                     <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                         <h3 className="font-bold text-slate-800 mb-4">오늘의 AI 비서 메시지</h3>
-                        <div className="bg-teal-50 border-l-4 border-teal-400 p-4 rounded-r-lg">
+                        <div className="bg-slate-100 border-l-4 border-slate-400 p-4 rounded-r-lg">
                             <div className="flex">
-                                <LightBulbIcon className="w-6 h-6 text-teal-600 mr-3 flex-shrink-0 mt-0.5" />
+                                <LightBulbIcon className="w-6 h-6 text-slate-500 mr-3 flex-shrink-0 mt-0.5" />
                                 {isLoadingMessage ? (
-                                    <div className="w-full h-12 bg-teal-100 rounded animate-pulse"></div>
+                                    <div className="w-full h-12 bg-slate-200 rounded animate-pulse"></div>
                                 ) : (
-                                    <p className="text-sm text-teal-900">{aiMessage}</p>
+                                    <p className="text-sm text-slate-800">{aiMessage}</p>
                                 )}
                             </div>
                         </div>

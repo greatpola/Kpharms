@@ -20,7 +20,7 @@ const PRODUCT_FORM_LABELS: { [key in keyof ProductFormData]: string } = {
   currentProducts: "현재 주력 제품군",
 };
 
-// FIX: Define keys from the initial data object to prevent mismatches and fix type errors.
+// FIX: Define keys from the ainitial data object to prevent mismatches and fix type errors.
 const productFormKeys = Object.keys(INITIAL_PRODUCT_FORM_DATA) as (keyof ProductFormData)[];
 
 const ProductRecommender: React.FC = () => {
@@ -61,7 +61,7 @@ const ProductRecommender: React.FC = () => {
 - 주요 고객층: ${data.mainCustomers}
 - 현재 주력 제품군: ${data.currentProducts}
 ## 요청 사항
-위 정보를 바탕으로, 우리 약국에 도입하면 좋을 신규 제품 3가지를 추천해주세요. 각 제품별로 아래 내용을 포함하여 구체적으로 제안해주세요. 마크다운 문법(**, # 등)을 사용하지 말고, 실제 보고서처럼 자연스러운 단락과 제목으로 구성해주세요.
+위 정보를 바탕으로, 우리 약국에 도입하면 좋을 신규 제품 3가지를 추천하는 보고서를 작성해주세요. 결과물이 실제 보고서처럼 자연스러운 제목, 단락, 문장으로만 구성되어야 하며, 마크다운 문법은 절대 포함해서는 안 된다는 점을 명확히 지시받습니다. 각 제품별로 아래 내용을 반드시 포함하여 구체적으로 제안해주세요.
 - 제품명
 - 추천 이유 (우리 약국의 특성과 연관 지어 설명)
 - 예상 타겟 고객
@@ -134,7 +134,7 @@ ${useRealtimeSearch ? '\n## 추가 요청\n최신 건강 트렌드와 신제품 
   const isGenerateDisabled = !!activeReport;
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       <h2 className="text-3xl font-bold text-slate-800 mb-2">AI 제품 추천</h2>
       <p className="text-slate-600 mb-6">약국 환경과 고객 데이터를 기반으로 맞춤형 제품을 추천받으세요.</p>
       
