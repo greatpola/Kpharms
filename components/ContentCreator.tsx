@@ -23,7 +23,6 @@ const CARD_NEWS_FORM_LABELS: { [key in keyof CardNewsFormData]: string } = {
   targetAudience: "핵심 타겟",
   requiredInfo: "필수 포함 정보",
 };
-// FIX: Cast Object.keys to the correct type to resolve TS errors.
 const cardNewsFormKeys = Object.keys(INITIAL_CARD_NEWS_FORM_DATA) as (keyof CardNewsFormData)[];
 
 const BLOG_FORM_LABELS: { [key in keyof BlogFormData]: string } = {
@@ -32,13 +31,11 @@ const BLOG_FORM_LABELS: { [key in keyof BlogFormData]: string } = {
   targetAudience: "핵심 타겟",
   tone: "글의 톤앤매너",
 };
-// FIX: Cast Object.keys to the correct type to resolve TS errors.
 const blogFormKeys = Object.keys(INITIAL_BLOG_FORM_DATA) as (keyof BlogFormData)[];
 
 const VIDEO_FORM_LABELS: { [key in keyof VideoFormData]: string } = {
   prompt: "영상 주제 및 컨셉",
 };
-// FIX: Cast Object.keys to the correct type to resolve TS errors.
 const videoFormKeys = Object.keys(INITIAL_VIDEO_FORM_DATA) as (keyof VideoFormData)[];
 
 type SubTabId = 'card-news' | 'blog' | 'video';
@@ -121,12 +118,12 @@ const ContentCreator: React.FC = () => {
             case 'blog':
                 currentFormData = { ...blogFormData };
                 title = `블로그: ${currentFormData.topic}`;
-                prompt = `# AI 블로그 포스팅 작성 요청\n## 주제: ${currentFormData.topic}\n## 핵심 키워드: ${currentFormData.keywords}\n## 핵심 타겟: ${currentFormData.targetAudience}\n## 글의 톤앤매너: ${currentFormData.tone}\n## 요청 사항: 위 정보를 바탕으로, 약국 블로그에 게시할 전문적인 정보성 포스팅을 작성해주세요. SEO(검색엔진 최적화)를 고려하여 키워드를 자연스럽게 본문에 녹여내고, 독자의 흥미를 유발할 수 있는 도입부와 명확한 결론을 포함해주세요. 결과물에 마크다운 문법(예: **, #, - 등)을 **절대** 사용하지 마세요. 바로 블로그에 게시할 수 있는 **완성된 글**의 형태로, 자연스러운 단락과 소제목으로만 구성해주세요.`;
+                prompt = `# AI 블로그 포스팅 작성 요청\n## 주제: ${currentFormData.topic}\n## 핵심 키워드: ${currentFormData.keywords}\n## 핵심 타겟: ${currentFormData.targetAudience}\n## 글의 톤앤매너: ${currentFormData.tone}\n## 요청 사항: 위 정보를 바탕으로, 약국 블로그에 게시할 전문적인 정보성 포스팅을 **완성된 문서 형태**로 작성해주세요. SEO(검색엔진 최적화)를 고려하여 키워드를 자연스럽게 본문에 녹여내고, 독자의 흥미를 유발할 수 있는 도입부와 명확한 결론을 포함해주세요. 결과물에 마크다운 문법(예: **, #, - 등)을 **절대** 사용하지 마세요. 바로 블로그에 게시할 수 있는 **완성된 글**의 형태로, 자연스러운 단락과 소제목으로만 구성해주세요.`;
                 break;
             case 'video':
                 currentFormData = { ...videoFormData };
                 title = `영상 스크립트: ${currentFormData.prompt.substring(0, 20)}...`;
-                prompt = `# AI 영상 스크립트 작성 요청\n## 영상 주제 및 컨셉: ${currentFormData.prompt}\n## 요청 사항: 위 컨셉에 맞춰 1분 내외의 유튜브 숏폼(Shorts) 영상 스크립트를 작성해주세요. 약사가 시청자에게 직접 말하는 형태로, 각 장면(Scene)별로 행동 지침(Action)과 대사(Dialogue)를 구분하여 작성해주세요. 시청자의 흥미를 끌 수 있는 도입부와 간결하고 명확한 정보 전달에 초점을 맞춰주세요.`;
+                prompt = `# AI 영상 스크립트 작성 요청\n## 영상 주제 및 컨셉: ${currentFormData.prompt}\n## 요청 사항: 위 컨셉에 맞춰 1분 내외의 유튜브 숏폼(Shorts) 영상 스크립트를 작성해주세요. 약사가 시청자에게 직접 말하는 형태로, 각 장면(Scene)별로 행동 지침(Action)과 대사(Dialogue)를 구분하여 작성해주세요. 시청자의 흥미를 끌 수 있는 도입부와 간결하고 명확한 정보 전달에 초점을 맞춰주세요. 결과물에는 마크다운 문법을 사용하지 마세요.`;
                 break;
         }
 

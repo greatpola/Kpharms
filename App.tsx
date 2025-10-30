@@ -15,6 +15,7 @@ const LaborAnalyzer = lazy(() => import('./components/LaborAnalyzer'));
 const ContentCreator = lazy(() => import('./components/ContentCreator'));
 const MedicationAssistant = lazy(() => import('./components/MedicationAssistant'));
 const CustomerHub = lazy(() => import('./components/CustomerHub'));
+const WorkReportGenerator = lazy(() => import('./components/WorkReportGenerator'));
 
 
 const AppContent: React.FC = () => {
@@ -38,6 +39,8 @@ const AppContent: React.FC = () => {
         return <MedicationAssistant />;
       case 'customer':
         return <CustomerHub />;
+      case 'work_report':
+        return <WorkReportGenerator />;
       default:
         return <Dashboard />;
     }

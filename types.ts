@@ -1,12 +1,13 @@
-import type { SVGProps } from 'react';
+import type { FC, SVGProps } from 'react';
 
 // General
-export type TabId = 'dashboard' | 'hiring' | 'product' | 'labor' | 'content' | 'medication' | 'customer';
+export type TabId = 'dashboard' | 'hiring' | 'product' | 'labor' | 'content' | 'medication' | 'customer' | 'work_report';
 
 export interface Tab {
   id: TabId;
   label: string;
-  icon: React.FC<SVGProps<SVGSVGElement>>;
+  // FIX: Use FC type directly after import to resolve namespace error.
+  icon: FC<SVGProps<SVGSVGElement>>;
 }
 
 // Gemini Chat
@@ -17,7 +18,7 @@ export interface ChatMessage {
 }
 
 // Reports
-export type ReportType = 'hiring' | 'product' | 'labor' | 'content' | 'medication';
+export type ReportType = 'hiring' | 'product' | 'labor' | 'content' | 'medication' | 'work_report';
 
 export interface SavedReport {
   id: string;
@@ -76,6 +77,11 @@ export interface BlogFormData {
 
 export interface VideoFormData {
   prompt: string;
+}
+
+export interface WorkReportFormData {
+  pharmacistName: string;
+  notes: string;
 }
 
 // Labor Analyzer

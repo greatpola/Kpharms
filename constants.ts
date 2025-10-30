@@ -1,4 +1,4 @@
-import type { Tab, HiringFormData, ProductFormData, LaborFormData, CardNewsFormData, BlogFormData, VideoFormData } from './types';
+import type { Tab, HiringFormData, ProductFormData, LaborFormData, CardNewsFormData, BlogFormData, VideoFormData, WorkReportFormData } from './types';
 import { HomeIcon } from './components/icons/HomeIcon';
 import { UserGroupIcon } from './components/icons/UserGroupIcon';
 import { SparklesIcon } from './components/icons/SparklesIcon';
@@ -6,6 +6,7 @@ import { ChartBarIcon } from './components/icons/ChartBarIcon';
 import { NewspaperIcon } from './components/icons/NewspaperIcon';
 import { PillIcon } from './components/icons/PillIcon';
 import { UsersIcon } from './components/icons/UsersIcon';
+import { ClipboardDocumentCheckIcon } from './components/icons/ClipboardDocumentCheckIcon';
 
 export const TABS: Tab[] = [
   { id: 'dashboard', label: '대시보드', icon: HomeIcon },
@@ -15,6 +16,7 @@ export const TABS: Tab[] = [
   { id: 'content', label: 'AI 콘텐츠 제작', icon: NewspaperIcon },
   { id: 'medication', label: 'AI 복약지도', icon: PillIcon },
   { id: 'customer', label: 'AI 고객 관리', icon: UsersIcon },
+  { id: 'work_report', label: 'AI 근무 보고서', icon: ClipboardDocumentCheckIcon },
 ];
 
 export const INITIAL_HIRING_FORM_DATA: HiringFormData = {
@@ -60,4 +62,9 @@ export const INITIAL_BLOG_FORM_DATA: BlogFormData = {
 
 export const INITIAL_VIDEO_FORM_DATA: VideoFormData = {
     prompt: "약사가 직접 알려주는 올바른 인공눈물 사용법, 유튜브 숏폼 영상",
+};
+
+export const INITIAL_WORK_REPORT_FORM_DATA: WorkReportFormData = {
+  pharmacistName: "김약사",
+  notes: "오후에 단골 손님 박도윤 님 방문, 혈압약 관련 장시간 상담 진행. 특별한 재고 문제는 없었음.",
 };

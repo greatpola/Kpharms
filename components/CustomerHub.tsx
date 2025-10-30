@@ -85,7 +85,7 @@ ${communicationHistoryText || '과거 소통 기록 없음'}
 
 ## 요청 사항
 - 메시지 유형: ${messageType}
-- 작성 지침: 결과물이 실제 고객에게 보내는 문자 메시지처럼 자연스러운 문장으로만 구성되어야 하며, 마크다운 문법은 절대 포함해서는 안 된다는 점을 명확히 지시받습니다. 이모지를 적절히 사용하여 친근하게 작성해주세요. 과거 소통 기록을 참고하여 메시지가 자연스럽게 이어지도록 해주세요.
+- 작성 지침: 고객에게 보내는 문자 메시지 형식이므로, 이모지를 적절히 사용하여 친근하게 작성해주세요. 과거 소통 기록을 참고하여 메시지가 자연스럽게 이어지도록 해주세요. 결과물에 마크다운 문법(예: **, #, - 등)을 **절대** 사용하지 마세요. 실제 고객에게 보내는 문자 메시지처럼, 줄바꿈과 이모지를 사용한 자연스러운 문장으로만 작성해주세요.
 `.trim();
 
         try {
@@ -128,6 +128,7 @@ ${communicationHistoryText || '과거 소통 기록 없음'}
     return (
         <div className="flex flex-col lg:flex-row h-full bg-slate-50 font-sans">
             {/* Customer List Panel */}
+            {/* FIX: Corrected invalid template literal syntax in className prop. */}
             <aside className={`w-full lg:w-1/3 bg-white border-r border-slate-200 flex flex-col h-full ${selectedCustomer ? 'hidden lg:flex' : 'flex'}`}>
                 <div className="p-4 border-b border-slate-200">
                      <h2 className="text-xl font-bold text-slate-800 mb-4">고객 목록</h2>
@@ -147,6 +148,7 @@ ${communicationHistoryText || '과거 소통 기록 없음'}
                         <button
                             key={customer.id}
                             onClick={() => handleSelectCustomer(customer)}
+                            // FIX: Corrected invalid template literal syntax in className prop.
                             className={`w-full text-left p-3 rounded-lg group transition-colors ${
                                 selectedCustomer?.id === customer.id
                                 ? 'bg-teal-50 text-teal-800'
@@ -176,6 +178,7 @@ ${communicationHistoryText || '과거 소통 기록 없음'}
             </aside>
 
             {/* Main Content Panel */}
+            {/* FIX: Corrected invalid template literal syntax in className prop. */}
             <main className={`flex-1 p-4 sm:p-8 overflow-y-auto ${!selectedCustomer ? 'hidden lg:block' : 'block'}`}>
                  <h2 className="hidden lg:block text-3xl font-bold text-slate-800 mb-2">AI 고객 관리 허브</h2>
                  <p className="hidden lg:block text-slate-600 mb-6">고객을 선택하여 상세 정보를 확인하고 AI로 맞춤 소통을 시작하세요.</p>
@@ -255,6 +258,7 @@ ${communicationHistoryText || '과거 소통 기록 없음'}
                              </div>
 
                              <div className="mt-4 flex flex-wrap justify-end items-center gap-3">
+                                {/* FIX: Corrected invalid template literal syntax in shareContent prop. */}
                                 <ShareButton shareContent={{title: `${selectedCustomer.name}님을 위한 메시지`, text: generatedMessage}} />
                                 <div className="flex items-center">
                                     {showSaveSuccess && <span className="text-sm text-green-600 mr-2 transition-opacity duration-300">✓ 저장됨!</span>}

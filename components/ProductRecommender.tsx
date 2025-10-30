@@ -20,7 +20,6 @@ const PRODUCT_FORM_LABELS: { [key in keyof ProductFormData]: string } = {
   currentProducts: "현재 주력 제품군",
 };
 
-// FIX: Define keys from the ainitial data object to prevent mismatches and fix type errors.
 const productFormKeys = Object.keys(INITIAL_PRODUCT_FORM_DATA) as (keyof ProductFormData)[];
 
 const ProductRecommender: React.FC = () => {
@@ -61,7 +60,7 @@ const ProductRecommender: React.FC = () => {
 - 주요 고객층: ${data.mainCustomers}
 - 현재 주력 제품군: ${data.currentProducts}
 ## 요청 사항
-위 정보를 바탕으로, 우리 약국에 도입하면 좋을 신규 제품 3가지를 추천하는 보고서를 작성해주세요. 결과물이 실제 보고서처럼 자연스러운 제목, 단락, 문장으로만 구성되어야 하며, 마크다운 문법은 절대 포함해서는 안 된다는 점을 명확히 지시받습니다. 각 제품별로 아래 내용을 반드시 포함하여 구체적으로 제안해주세요.
+위 정보를 바탕으로, 우리 약국에 도입하면 좋을 신규 제품 3가지를 추천하는 **완성된 보고서**를 작성해주세요. 결과물에 마크다운 문법(예: **, #, - 등)을 **절대** 사용하지 마세요. 실제 보고서처럼 자연스러운 제목과 상세한 설명으로 구성된 완벽한 문서 형식으로만 생성해야 합니다. 각 제품별로 아래 내용을 반드시 포함하여 구체적으로 제안해주세요.
 - 제품명
 - 추천 이유 (우리 약국의 특성과 연관 지어 설명)
 - 예상 타겟 고객
